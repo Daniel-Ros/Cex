@@ -2,6 +2,7 @@ CC = gcc
 AR = ar -rcs
 FLAGS = -Wall -c
 
+all:
 
 basicClassifications.o : basicClassification.c
 	$(CC) $(FLAGS) $^ -o $@
