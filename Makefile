@@ -49,7 +49,7 @@ mains: main.o recursives
 	$(CC) $(FLAGS) main.o -o mains -L. -lclassrec $(LFLAGS)
 
 mainsloop :main.o loopd
-	$(CC) $(FLAGS) main.o -o maindloop -L. -lclassloops $(LFLAGS)
+	$(CC) $(FLAGS) main.o -o mainsloop -L. -lclassloops $(LFLAGS)
 
 maindloop: main.o loopd
 	$(CC) $(FLAGS) main.o -o maindloop -L. -lclassloops $(LFLAGS)
