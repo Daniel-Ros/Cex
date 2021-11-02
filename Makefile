@@ -1,16 +1,17 @@
 CC = gcc
 AR = ar -rcs
-FLAGS = -Wall -c
+FLAGS = -Wall
+CFLAGS = -Wall -c
 LFLAGS = -lm
 
 
-all: loops recursives recursived loopd maindloop maindrec mains
+all: loops recursives recursived loopd maindloop maindrec mains mainsloop
 
 basicClassifications.o : basicClassification.c
-	$(CC) $(FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 basicClassificationd.o : basicClassification.c
-	$(CC) $(FLAGS) -fPIC $^ -o $@
+	$(CC) $(CFLAGS) -fPIC $^ -o $@
 
 loops: libclassloops.a
 
@@ -18,7 +19,7 @@ libclassloops.a: basicClassifications.o advancedClassificationLoops.o
 	$(AR) libclassloops.a $^
 
 advancedClassificationLoops.o : advancedClassificationLoop.c
-	$(CC) $(FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 loopd:libclassloops.so
 
@@ -26,7 +27,7 @@ libclassloops.so: basicClassificationd.o advancedClassificationLoopd.o
 	$(CC) -shared -o libclassloops.so $^
 
 advancedClassificationLoopd.o : advancedClassificationLoop.c
-	$(CC) $(FLAGS) -fPIC $^ -o $@
+	$(CC) $(CFLAGS) -fPIC $^ -o $@
 
 recursives:libclassrec.a
 
@@ -34,7 +35,7 @@ libclassrec.a: basicClassifications.o advancedClassificationRecursions.o
 	$(AR) libclassrec.a $^
 
 advancedClassificationRecursions.o : advancedClassificationRecursion.c
-	$(CC) $(FLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 recursived:libclassrec.so
 
@@ -42,17 +43,22 @@ libclassrec.so: basicClassificationd.o advancedClassificationRecursion.o
 	$(CC) -shared -o libclassrec.so $^
 
 advancedClassificationRecursion.o : advancedClassificationRecursion.c
-	$(CC) $(FLAGS) -fPIC $^ -o $@
+	$(CC) $(CFLAGS) -fPIC $^ -o $@
 
-mains: main.c recursives
-	$(CC) $(FLAGS) main.c -o mains -L. -lclassrec $(LFLAGS)
+mains: main.o recursives
+	$(CC) $(FLAGS) main.o -o mains -L. -lclassrec $(LFLAGS)
 
-maindloop: main.c loopd
-	$(CC) $(FLAGS) main.c -o maindloop -L. -lclassloops $(LFLAGS)
+mainsloop :main.o loopd
+	$(CC) $(FLAGS) main.o -o maindloop -L. -lclassloops $(LFLAGS)
 
-maindrec:main.c recursives
-	$(CC) $(FLAGS) main.c -o maindrec -L. -lclassrec $(LFLAGS)
+maindloop: main.o loopd
+	$(CC) $(FLAGS) main.o -o maindloop -L. -lclassloops $(LFLAGS)
 
+maindrec: main.o recursives
+	$(CC) $(FLAGS) main.o -o maindrec -L. -lclassrec $(LFLAGS)
+
+main.o: main.c
+	$(CC) $(CFLAGS) main.c -o main.o
 
 
 .PHONY: clean
