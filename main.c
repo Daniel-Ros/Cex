@@ -20,7 +20,6 @@ int main()
             printf("%d ",i);
         }
     }
-    printf("");
     printf("\n ");
     printf("The Prime numbers are:");
     for(i=n1;i<=n2;i++){
@@ -35,6 +34,5 @@ int main()
             printf("%d ",i);
         }
     }
-    printf("\n ");
     return 0;
 }

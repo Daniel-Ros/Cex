@@ -1,8 +1,10 @@
 CC = gcc
 AR = ar -rcs
 FLAGS = -Wall -c
+LFLAGS = -lm
 
-all:
+
+all: loops recursives recursived loopd maindloop maindrec mains
 
 basicClassifications.o : basicClassification.c
 	$(CC) $(FLAGS) $^ -o $@
@@ -37,20 +39,23 @@ advancedClassificationRecursions.o : advancedClassificationRecursion.c
 recursived:libclassrec.so
 
 libclassrec.so: basicClassificationd.o advancedClassificationRecursion.o
-	$(CC) -shared -o libclassloops.so $^
+	$(CC) -shared -o libclassrec.so $^
 
 advancedClassificationRecursion.o : advancedClassificationRecursion.c
 	$(CC) $(FLAGS) -fPIC $^ -o $@
 
-mains: maindloop maindrec
+mains: main.c recursives
+	$(CC) $(FLAGS) main.c -o mains -L. -lclassrec $(LFLAGS)
 
 maindloop: main.c loopd
-	$(CC) main.c -o maindloop -L. -lclassloops
+	$(CC) $(FLAGS) main.c -o maindloop -L. -lclassloops $(LFLAGS)
 
 maindrec:main.c recursives
-	$(CC) main.c -o maindloop -L. -lclassrec
+	$(CC) $(FLAGS) main.c -o maindrec -L. -lclassrec $(LFLAGS)
+
+
 
 .PHONY: clean
 
 clean:
-	rm -f *.o *.a *.so maindloop maindrec
+	rm -f *.o *.a *.so maindloop maindrec mains
