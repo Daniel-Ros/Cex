@@ -5,7 +5,7 @@ CFLAGS = -Wall -c
 LFLAGS = -lm
 
 
-all: loops recursives recursived loopd maindloop maindrec mains mainsloop
+all: loops recursives maindloop maindrec mains mainsloop recursived loopd
 
 basicClassifications.o : basicClassification.c
 	$(CC) $(CFLAGS) $^ -o $@
@@ -45,19 +45,16 @@ libclassrec.so: basicClassificationd.o advancedClassificationRecursion.o
 advancedClassificationRecursion.o : advancedClassificationRecursion.c
 	$(CC) $(CFLAGS) -fPIC $^ -o $@
 
-mains: main.o recursives
-	$(CC) $(FLAGS) main.o -o mains -L. -lclassrec $(LFLAGS)
+mains: main.o libclassrec.so
+	$(CC) $(FLAGS) main.o -o $@ -L. ./libclassrec.so $(LFLAGS)
 
-mainsloop :main.o loopd
-	$(CC) $(FLAGS) main.o -o mainsloop -L. -lclassloops $(LFLAGS)
+maindloop: main.o libclassloops.a
+	$(CC) $(FLAGS) main.o -o $@ -L. ./libclassloops.a $(LFLAGS)
 
-maindloop: main.o loopd
-	$(CC) $(FLAGS) main.o -o maindloop -L. -lclassloops $(LFLAGS)
+maindrec: main.o libclassrec.a
+	$(CC) $(FLAGS) main.o -o $@ -L. ./libclassrec.a $(LFLAGS)
 
-maindrec: main.o recursives
-	$(CC) $(FLAGS) main.o -o maindrec -L. -lclassrec $(LFLAGS)
-
-main.o: main.c
+main.o: main.c NumClass.h
 	$(CC) $(CFLAGS) main.c -o main.o
 
 
