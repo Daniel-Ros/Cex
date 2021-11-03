@@ -3,11 +3,17 @@
 #include <math.h>
 
 
+int getNumLengt(int n){
+    return (int)log10(n) +1;
+}
+
+
+
 int checkArmStorng(int n,int p){
     if(n > 0)
-        return (pow(n%10,p) + checkArmStorng(n/10,p + 1));
+        return (pow(n%10,p) + checkArmStorng(n/10,p));
     else
-        return -1;
+        return 0;
 }
 
 int isPalindromeHelper(int n, int acc){
@@ -20,13 +26,15 @@ int isPalindromeHelper(int n, int acc){
 }
 
 int isArmstrong(int n ){
-    if(n == checkArmStorng(n,0))
+    if(n == checkArmStorng(n,getNumLengt(n)))
      return 1;
     else
      return 0;
 }
 
 int isPalindrome(int n ){
-     return 0;
+     if(n == isPalindromeHelper(n,0))
+         return 1;
+    return 0;
 }
 

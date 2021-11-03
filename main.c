@@ -17,21 +17,21 @@ int main()
     printf("The Palindromes are:");
     for(i=n1;i<=n2;i++){
         if(isPalindrome(i)){
-            printf("%d ",i);
+            printf(" %d",i);
         }
     }
     printf("\n ");
     printf("The Prime numbers are:");
     for(i=n1;i<=n2;i++){
         if(isPrime(i)){
-            printf("%d ",i);
+            printf(" %d",i);
         }
     }
     printf("\n ");
     printf("The Strong numbers are:");
     for(i=n1;i<=n2;i++){
         if(isStrong(i)){
-            printf("%d ",i);
+            printf(" %d",i);
         }
     }
     return 0;
