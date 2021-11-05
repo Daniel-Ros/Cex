@@ -5,7 +5,7 @@ CFLAGS = -Wall -c
 LFLAGS = -lm
 
 
-all: loops recursives maindloop maindrec mains mainsloop recursived loopd
+all: loops recursives maindloop maindrec mains recursived loopd
 
 basicClassifications.o : basicClassification.c
 	$(CC) $(CFLAGS) $^ -o $@
