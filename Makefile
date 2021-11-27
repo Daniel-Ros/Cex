@@ -5,12 +5,12 @@ CFLAGS = -Wall -c
 LFLAGS = -lm
 
 
-all: main
+all: connections
 
-main: libmat.a connections
+connections: libmat.a main.o
 	$(CC) $(FLAGS) main.o -o $@ -L. -lmat $(LFLAGS)
 
-connections: main.c
+main.o: main.c
 	$(CC) $(CFLAGS) main.c -o main.o
 
 libmat.a : my_mat.o
