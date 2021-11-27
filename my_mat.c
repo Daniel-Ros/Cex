@@ -27,8 +27,13 @@ void fwa(int mat[][N]) {
     for (int k = 0; k < N; k++) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (mat[i][k] != 0 && mat[k][j] != 0 &&mat[i][j] > mat[i][k] + mat[k][j] )
+                if(i==j){
+                    mat[i][j] = 0;
+                }else if (mat[i][k] != 0 && mat[k][j] != 0 && mat[i][j] > mat[i][k] + mat[k][j] ) {
                     mat[i][j] = mat[i][k] + mat[k][j];
+                }else if(mat[i][k] != 0 && mat[k][j] != 0 && mat[i][j] ==0){
+                    mat[i][j] = mat[i][k] + mat[k][j];
+                }
             }
         }
     }
