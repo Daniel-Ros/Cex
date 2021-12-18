@@ -25,6 +25,12 @@ void gematriaSeq(char * str,char *wrd)
             g = 0;
 
         currGeo += g;
+        if(currGeo == 0 && g == 0){
+            lastChecked++;
+            while (isSpecialCh(*lastChecked) != 0) lastChecked++;
+            str = lastChecked;
+            continue;
+        }
 
         if(currGeo < cmp)
         {
@@ -215,18 +221,17 @@ void anagramSeq(char *str, char *cmp)
         int g = *str;
 
         cmpnumbers[g]--;
-        cmpnumbers[26]--;
+        if(g != ' ')
+            cmpnumbers[26]--;
 
-        if(cmpnumbers[g] == -1)
-        {
+        if(cmpnumbers[g] == -1 && g != ' '){
             cpyarr(numbers,cmpnumbers,129);
             currStr = tmp;
             lastChecked++;
             while (isSpecialCh(*lastChecked) != 0) lastChecked++;
             str = lastChecked;
-            while (isSpecialCh(*str) != 0) str++;
         }
-        else if(cmpnumbers[26] == 0)
+        else if(cmpnumbers[26] == 0 && g != ' ')
         {
             *currStr = *str;
             currStr++;
@@ -245,16 +250,13 @@ void anagramSeq(char *str, char *cmp)
             lastChecked++;
             while (isSpecialCh(*lastChecked) != 0) lastChecked++;
             str = lastChecked;
-            while (isSpecialCh(*str) != 0) str++;
         }
         else
         {
             *currStr = *str;
             currStr++;
+            str++;
         }
-
-        str++;
-        while (isSpecialCh(*str) != 0 && cmpnumbers[26] == numbers[26]) str++;
     }
     free(tmp);
 }
