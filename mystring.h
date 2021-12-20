@@ -7,6 +7,7 @@
 
 int toGematria(char*);
 void toAtbash(char *,char);
+void toReverse(char* ,char );
 void getNumOfLetters(char *,char ,int * );
 void cpyarr(int *,int *,int);
 int isSpecialCh(char);

@@ -94,93 +94,75 @@ int toGematria(char *str)
 void atbashSeq(char * str,char* cmp)
 {
     char *cmp_original = malloc(30);
+    char *cmp_reverse= malloc(30);
 
-    char * beg = cmp;
-    char * currBeg = beg;
-    char * end = cmp + strlen(cmp) - 1;
-    char * currEnd = cmp + strlen(cmp) - 1;
-
-    char *tmpBeg = (char*)malloc((strlen(str)));
-    char *currentTmpBeg = tmpBeg;
-
-    char *tmpEnd = (char*)malloc((strlen(str)));
-    char *currentTmpEnd = tmpEnd;
+    char *tmp = (char*)malloc((strlen(str)));
+    char *currTmp = tmp;
+    char * lastChecked = str;
 
     int first = 0;
     memcpy(cmp_original,cmp,30);
+    memcpy(cmp_reverse,cmp,30);
     toAtbash(cmp,'\0');
-
+    toReverse(cmp_reverse,'\0');
+    toAtbash(cmp_reverse,'\0');
     while(*str != '~')
     {
-        if(*str == ' ' && currBeg != beg)
+        currTmp = tmp;
+        int i = 0;
+        for(;i< strlen(cmp) && *str != '~';)
         {
-            *currentTmpBeg = *str;
-            currentTmpBeg++;
+            char c = *str;
+            if(isSpecialCh(c) == 0)
+            {
+                *currTmp = c;
+                currTmp++;
+                i++;
+                str++;
+            }
+            else{
+                str++;
+            }
         }
-        else if (*currBeg == *str){
-            *currentTmpBeg = *str;
-            currentTmpBeg++;
-            currBeg++;
-        }
-        else
-        {
-            currBeg = beg;
-            currentTmpBeg = tmpBeg;
-        }
+        if(i <= strlen(cmp) -1)
+            continue;
 
-        if(currBeg == end + 1)
+        if(strcmp(cmp,tmp) == 0)
         {
-            currBeg = beg;
             if(first ==0)
             {
-                printf("%s",tmpBeg);
+                printf("%s",tmp);
                 first++;
             }
             else
             {
-                printf("~%s",tmpBeg);
+                printf("~%s",tmp);
             }
         }
-        //inverted
-        if(*str == ' ' && currEnd != end)
-        {
-            *currentTmpEnd = *str;
-            currentTmpEnd++;
-        }
-        else if (*currEnd == *str){
-            *currentTmpEnd = *str;
-            currentTmpEnd++;
-            currEnd--;
-        }
-        else
-        {
-            currEnd = end;
-            currentTmpEnd = tmpEnd;
-        }
 
-        if(currEnd == beg - 1)
+        if(strcmp(cmp_reverse,tmp) == 0)
         {
-            currEnd = end;
             if(first ==0)
             {
-                printf("%s",tmpEnd);
+                printf("%s",tmp);
                 first++;
             }
             else
             {
-                printf("~%s",tmpEnd);
+                printf("~%s",tmp);
             }
         }
 
-
-        str++;
+        *currTmp = 0;
+        lastChecked++;
+        while (isSpecialCh(*lastChecked) != 0) lastChecked++;
+        str = lastChecked;
     }
 
     memcpy(cmp,cmp_original,30);
     free(cmp_original);
-    free(tmpBeg);
-    free(tmpEnd);
-
+    free(cmp_reverse);
+    free(tmp);
 }
 
 
@@ -200,6 +182,22 @@ void toAtbash(char* str,char nullTer)
     }
 }
 
+void toReverse(char* str,char nullTer)
+{
+    char *ret = (char *) malloc(30);
+    char *curr = ret;
+    int len = strlen(str);
+
+    for (int i = len - 1; i >= 0 ; --i) {
+        *curr = *(str+i);
+        curr++;
+    }
+
+    for (int i = 0; i<len ; ++i) {
+        str[i]= ret[i];
+    }
+    free(ret);
+}
 
 void anagramSeq(char *str, char *cmp)
 {
