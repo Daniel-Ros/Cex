@@ -288,6 +288,7 @@ void delete_edge_cmd(pnode *head , int src,int dest)
     {
         (*head)->edges = e->next;
         free(e);
+        return;
     }
 
     pedge prev;
