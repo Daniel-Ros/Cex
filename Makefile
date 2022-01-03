@@ -13,10 +13,10 @@ graph: libgraph.a main.o
 main.o: main.c
 	$(CC) $(CFLAGS) main.c -o main.o
 
-libgraph.a : mystring.o
+libgraph.a : mygraph.o
 	$(AR) libgraph.a $^
 
-mystring.o: graph.c
+mygraph.o: graph.c
 	$(CC) $(CFLAGS) $^ -o $@
 
 
