@@ -1,7 +1,7 @@
 CC = gcc
 AR = ar -rcs
-FLAGS = -Wall
-CFLAGS = -Wall -c
+FLAGS = -Wall -g
+CFLAGS = -Wall -c -g
 LFLAGS = -lm
 
 
