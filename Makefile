@@ -5,22 +5,22 @@ CFLAGS = -Wall -c
 LFLAGS = -lm
 
 
-all: stringProg
+all: graph
 
-stringProg: libstr.a main.o
-	$(CC) $(FLAGS) main.o -o $@ -L. -lstr $(LFLAGS)
+graph: libgraph.a main.o
+	$(CC) $(FLAGS) main.o -o $@ -L. -lgraph $(LFLAGS)
 
 main.o: main.c
 	$(CC) $(CFLAGS) main.c -o main.o
 
-libstr.a : mystring.o
-	$(AR) libstr.a $^
+libgraph.a : mystring.o
+	$(AR) libgraph.a $^
 
-mystring.o: mystring.c
+mystring.o: graph.c
 	$(CC) $(CFLAGS) $^ -o $@
 
 
 .PHONY: clean
 
 clean:
-	rm -f *.o *.a *.so stringProg
+	rm -f *.o *.a *.so graph
