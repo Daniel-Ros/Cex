@@ -329,6 +329,8 @@ void deleteGraph_cmd(pnode* head)
         free_edges_of_node(del);
         free(del);
     }
+
+    *head = NULL;
 }
 
 
