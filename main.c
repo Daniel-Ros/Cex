@@ -51,7 +51,7 @@ void handle_T(pnode g)
         scanf("%d",&data);
         ind[i] = data;
     }
-    printf("TSP shortest path: %d\n ", TSP_cmd(g,ind,size));
+    printf("TSP shortest path: %d \n", TSP_cmd(g,ind,size));
 
 }
 
